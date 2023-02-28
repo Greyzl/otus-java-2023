@@ -1,5 +1,4 @@
-rootProject.name = "otusJava"
-include ("L01-gradle")
+rootProject.name = "otus-java-2023"
 
 
 pluginManagement {
