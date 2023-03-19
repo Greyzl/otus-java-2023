@@ -26,11 +26,7 @@ public class CustomerService {
         customers.put(customer,data);
     }
     private Map.Entry<Customer, String> copyOrNull(Map.Entry<Customer, String> entry){
-        if (entry == null)return null;
-        Customer copy = new Customer(
-                entry.getKey().getId(),
-                entry.getKey().getName(),
-                entry.getKey().getScores());
-        return Map.entry(copy, entry.getValue());
+        if (entry == null) return null;
+        return Map.entry(new Customer(entry.getKey()), entry.getValue());
     }
 }
