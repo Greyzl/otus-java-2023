@@ -7,7 +7,7 @@ import java.util.TreeMap;
 
 public class CustomerService {
 
-    private TreeMap<Customer,String> customers = new TreeMap<>();
+    private final TreeMap<Customer,String> customers = new TreeMap<>();
     //todo: 3. надо реализовать методы этого класса
     //важно подобрать подходящую Map-у, посмотрите на редко используемые методы, они тут полезны
 
