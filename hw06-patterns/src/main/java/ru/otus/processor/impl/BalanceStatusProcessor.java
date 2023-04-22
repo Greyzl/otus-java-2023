@@ -21,9 +21,7 @@ public class BalanceStatusProcessor implements ATMProcessor {
 
     @Override
     public void process() {
-        int balance = 0;
-        for (BanknoteType banknoteType: BanknoteType.values())
-            balance += banknoteCellService.getBanknoteCount(banknoteType) * banknoteType.getBanknoteValue();
+        int balance = banknoteCellService.getAvailableCashAmount();
         String formattedMessage = messageFormatter.format(balance);
         outputService.print(formattedMessage);
     }

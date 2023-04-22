@@ -37,20 +37,22 @@ public class AtmMenuServiceImpl implements AtmMenuService {
                 int menuItemId = Integer.parseInt(userInput);
                 Optional<MenuItem> menuItem = menuItemRepository.getMenuItem(menuItemId);
                 if (menuItem.isEmpty()){
-                    throw new MenuItemNotExistException("Such item doesn't exist. id:" + menuItemId);
+                    throw new MenuItemNotExistException("Such option doesn't exist. id:" + menuItemId);
                 }
                 return menuItem.get().getAtmProcessor();
             } catch (RuntimeException exception){
-                outputService.print("Incorrect command. Please, try again.");
+                outputService.print("Incorrect input. Please, try again.");
             }
         }
     }
 
     private String getMenuItemListMessage(){
         StringBuilder builder = new StringBuilder();
+        builder.append("Available options: \n");
         for (MenuItem menuItem: menuItemRepository.getMenuItemList()){
             builder.append(menuItemFormatter.format(menuItem)).append("\n");
         }
+        builder.append("Please, enter digit of option");
         return builder.toString();
     }
 }

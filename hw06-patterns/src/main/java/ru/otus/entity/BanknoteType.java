@@ -1,6 +1,7 @@
 package ru.otus.entity;
 
 public enum BanknoteType {
+    ONES(1),
     TEN(10),
     FIFTY(50),
     HUNDRED(100),

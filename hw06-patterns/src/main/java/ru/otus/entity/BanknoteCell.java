@@ -1,25 +1,26 @@
 package ru.otus.entity;
 
-public class BanknoteCell {
+public class BanknoteCell{
 
-    private final BanknoteType banknoteType;
-
-    private int banknoteCount;
+    private final BanknotePack banknotePack;
 
     public BanknoteCell(BanknoteType banknoteType, int banknoteCount){
-        this.banknoteType = banknoteType;
-        this.banknoteCount = banknoteCount;
+        this.banknotePack = new BanknotePack(banknoteType, banknoteCount);
     }
 
     public BanknoteType getBanknoteType() {
-        return banknoteType;
+        return banknotePack.getBanknoteType();
     }
 
     public int getBanknoteCount() {
-        return banknoteCount;
+        return banknotePack.getBanknoteCount();
     }
 
     public void setBanknoteCount(int banknoteCount) {
-        this.banknoteCount = banknoteCount;
+        banknotePack.setBanknoteCount(banknoteCount);
+    }
+
+    public Boolean isEmpty(){
+        return banknotePack.getBanknoteCount() == 0;
     }
 }
