@@ -6,8 +6,9 @@ import ru.otus.service.CalculatorService;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LoggingHandler implements InvocationHandler {
 
@@ -32,13 +33,8 @@ public class LoggingHandler implements InvocationHandler {
     private Set<Method> getLogAnnotatedMethods(Object object){
         Class<?> objectClass = object.getClass();
         Method[] objectClassDeclaredMethods = objectClass.getDeclaredMethods();
-        Set<Method> annotatedMethods = new HashSet<>();
-        for (Method objectClassMethod : objectClassDeclaredMethods){
-            if (objectClassMethod.getDeclaredAnnotation(Log.class) != null){
-                annotatedMethods.add(objectClassMethod);
-            }
-        }
-        return annotatedMethods;
+        return Arrays.stream(objectClassDeclaredMethods).filter(
+                method -> method.isAnnotationPresent(Log.class)).collect(Collectors.toSet());
     }
 
     private Boolean isLoggingMethod(Method method){
@@ -51,19 +47,11 @@ public class LoggingHandler implements InvocationHandler {
     }
 
     private Boolean isSameMethods(Method invokedMethod, Method proxiedObjectMethod){
-        if (!invokedMethod.getName().equals(proxiedObjectMethod.getName())
-        || invokedMethod.getParameterCount() != proxiedObjectMethod.getParameterCount()){
+        if (!invokedMethod.getName().equals(proxiedObjectMethod.getName())){
             return false;
         }
-        boolean sameSignature = true;
         Class<?>[] proxyMethodParamTypes = invokedMethod.getParameterTypes();
         Class<?>[] objectTestMethodParamTypes = proxiedObjectMethod.getParameterTypes();
-        for (int paramIndex = 0; paramIndex < invokedMethod.getParameterCount(); paramIndex++){
-            if (objectTestMethodParamTypes[paramIndex] != proxyMethodParamTypes[paramIndex]){
-                sameSignature = false;
-                break;
-            }
-        }
-        return sameSignature;
+        return Arrays.equals(proxyMethodParamTypes, objectTestMethodParamTypes);
     }
 }
