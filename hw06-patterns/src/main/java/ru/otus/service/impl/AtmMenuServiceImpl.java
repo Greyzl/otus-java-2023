@@ -4,7 +4,8 @@ import ru.otus.entity.MenuItem;
 import ru.otus.exception.MenuItemNotExistException;
 import ru.otus.formatter.MenuItemFormatter;
 import ru.otus.processor.ATMProcessor;
-import ru.otus.repository.MenuItemRepository;
+import ru.otus.repository.AtmProcessorRepository;
+import ru.otus.repository.PermissionMenuItemRepository;
 import ru.otus.service.AtmMenuService;
 import ru.otus.service.InputService;
 import ru.otus.service.OutputService;
@@ -17,16 +18,16 @@ public class AtmMenuServiceImpl implements AtmMenuService {
 
     private final InputService inputService;
 
-    private final MenuItemRepository menuItemRepository;
+    private final AtmProcessorRepository atmProcessorRepository;
 
     private final MenuItemFormatter menuItemFormatter = new MenuItemFormatter();
 
     public AtmMenuServiceImpl(OutputService outputService,
                               InputService inputService,
-                              MenuItemRepository menuItemRepository){
+                              AtmProcessorRepository atmProcessorRepository){
         this.outputService = outputService;
         this.inputService = inputService;
-        this.menuItemRepository = menuItemRepository;
+        this.atmProcessorRepository = atmProcessorRepository;
     }
     @Override
     public ATMProcessor getNextAtmProcessor() {
@@ -35,11 +36,11 @@ public class AtmMenuServiceImpl implements AtmMenuService {
                 outputService.print(getMenuItemListMessage());
                 String userInput = inputService.read();
                 int menuItemId = Integer.parseInt(userInput);
-                Optional<MenuItem> menuItem = menuItemRepository.getMenuItem(menuItemId);
-                if (menuItem.isEmpty()){
+                Optional<ATMProcessor> mayBeProcessor = atmProcessorRepository.getByMenuId(menuItemId);
+                if (mayBeProcessor.isEmpty()){
                     throw new MenuItemNotExistException("Such option doesn't exist. id:" + menuItemId);
                 }
-                return menuItem.get().getAtmProcessor();
+                return mayBeProcessor.get();
             } catch (RuntimeException exception){
                 outputService.print("Incorrect input. Please, try again.");
             }
@@ -49,7 +50,7 @@ public class AtmMenuServiceImpl implements AtmMenuService {
     private String getMenuItemListMessage(){
         StringBuilder builder = new StringBuilder();
         builder.append("Available options: \n");
-        for (MenuItem menuItem: menuItemRepository.getMenuItemList()){
+        for (MenuItem menuItem: atmProcessorRepository.getMenuItems()){
             builder.append(menuItemFormatter.format(menuItem)).append("\n");
         }
         builder.append("Please, enter digit of option");

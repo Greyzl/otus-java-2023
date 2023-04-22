@@ -1,6 +1,6 @@
 package ru.otus.service;
 
-import ru.otus.entity.ApplicationStatus;
+import ru.otus.entity.enums.ApplicationStatus;
 
 public class ApplicationStatusService {
 

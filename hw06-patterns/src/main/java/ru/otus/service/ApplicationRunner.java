@@ -1,13 +1,7 @@
 package ru.otus.service;
 
-import ru.otus.entity.MenuItem;
 import ru.otus.exception.UnexpectedException;
 import ru.otus.processor.ATMProcessor;
-import ru.otus.processor.impl.BalanceStatusProcessor;
-import ru.otus.repository.MenuItemRepository;
-import ru.otus.repository.impl.MenuItemRepositoryImpl;
-import ru.otus.service.impl.ConsoleInputService;
-import ru.otus.service.impl.ConsoleOutputService;
 
 public class ApplicationRunner {
 

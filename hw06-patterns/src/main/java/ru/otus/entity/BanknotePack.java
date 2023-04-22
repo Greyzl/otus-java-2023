@@ -1,5 +1,7 @@
 package ru.otus.entity;
 
+import ru.otus.entity.enums.BanknoteType;
+
 import java.util.Objects;
 
 public class BanknotePack {
@@ -7,9 +9,12 @@ public class BanknotePack {
 
     private int banknoteCount;
 
+    private int total;
+
     public BanknotePack(BanknoteType banknoteType, int banknoteCount){
         this.banknoteType = banknoteType;
         this.banknoteCount = banknoteCount;
+        this.total = banknoteType.getBanknoteValue() * banknoteCount;
     }
 
     public BanknoteType getBanknoteType() {
@@ -20,9 +25,20 @@ public class BanknotePack {
         return banknoteCount;
     }
 
-    public void setBanknoteCount(int banknoteCount){
-        this.banknoteCount = banknoteCount;
+    public void addBanknoteCount(int banknoteCount){
+        this.banknoteCount += banknoteCount;
+        this.total += banknoteCount * banknoteType.getBanknoteValue();
     }
+
+    public void withdrawBanknoteCount(int banknoteCount){
+        this.banknoteCount -= banknoteCount;
+        this.total -= banknoteCount * banknoteType.getBanknoteValue();
+    }
+
+    public int getTotal(){
+        return total;
+    }
+
 
     @Override
     public boolean equals(Object o) {

@@ -1,4 +1,4 @@
-package ru.otus.entity;
+package ru.otus.entity.enums;
 
 public enum ApplicationStatus {
     RUNNING,

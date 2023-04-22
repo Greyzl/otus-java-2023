@@ -1,34 +1,18 @@
 package ru.otus.entity;
 
-import ru.otus.processor.ATMProcessor;
+import java.util.Objects;
 
-import java.util.List;
+public record MenuItem(Integer id, String label) {
 
-public class MenuItem {
-
-    private Integer id;
-
-    private String label;
-
-    private ATMProcessor atmProcessor;
-
-    public MenuItem(Integer id, String label, ATMProcessor atmProcessor){
-        this.id = id;
-        this.label = label;
-        this.atmProcessor = atmProcessor;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MenuItem menuItem)) return false;
+        return Objects.equals(id(), menuItem.id());
     }
 
-
-    public Integer getId() {
-        return id;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id());
     }
-
-    public String getLabel() {
-        return label;
-    }
-
-    public ATMProcessor getAtmProcessor() {
-        return atmProcessor;
-    }
-
 }

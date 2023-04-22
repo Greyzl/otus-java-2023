@@ -1,6 +1,5 @@
 package ru.otus.processor.impl;
 
-import ru.otus.entity.BanknoteType;
 import ru.otus.formatter.AtmBalanceMessageFormatter;
 import ru.otus.processor.ATMProcessor;
 import ru.otus.service.BanknoteCellService;

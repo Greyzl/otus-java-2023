@@ -1,5 +1,7 @@
 package ru.otus.entity;
 
+import ru.otus.entity.enums.BanknoteType;
+
 public class BanknoteCell{
 
     private final BanknotePack banknotePack;
@@ -16,8 +18,16 @@ public class BanknoteCell{
         return banknotePack.getBanknoteCount();
     }
 
-    public void setBanknoteCount(int banknoteCount) {
-        banknotePack.setBanknoteCount(banknoteCount);
+    public void addBanknoteCount(int banknoteCount) {
+        banknotePack.addBanknoteCount(banknoteCount);
+    }
+
+    public void withdrawBanknoteCount(int banknoteCount) {
+        banknotePack.withdrawBanknoteCount(banknoteCount);
+    }
+
+    public int getTotal(){
+        return banknotePack.getTotal();
     }
 
     public Boolean isEmpty(){

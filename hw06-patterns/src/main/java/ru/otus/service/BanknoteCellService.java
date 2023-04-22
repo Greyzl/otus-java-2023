@@ -1,7 +1,7 @@
 package ru.otus.service;
 
-import ru.otus.entity.BanknoteCell;
-import ru.otus.entity.BanknoteType;
+import ru.otus.entity.BanknotePack;
+import ru.otus.entity.enums.BanknoteType;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ public interface BanknoteCellService {
 
     int getBanknoteCount(BanknoteType banknoteType);
 
-    void addToBalance(List<BanknoteCell> banknoteCellList);
+    void addBanknoteCount(BanknoteType banknoteType, int banknoteCount);
 
-    void withdraw(List<BanknoteCell> requestedCash);
+    void withdrawBanknoteCount(BanknoteType banknoteType, int banknoteCount);
 
-    List<BanknoteCell> getPossibleWithdraw(int requestedCash);
+    List<BanknotePack> getAvailableBanknotePacks();
 
     int getAvailableCashAmount();
 
