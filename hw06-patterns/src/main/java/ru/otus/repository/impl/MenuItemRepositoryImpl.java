@@ -6,6 +6,7 @@ import ru.otus.repository.MenuItemRepository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MenuItemRepositoryImpl implements MenuItemRepository {
@@ -19,13 +20,13 @@ public class MenuItemRepositoryImpl implements MenuItemRepository {
     }
 
     @Override
-    public MenuItem getMenuItem(int id){
-        return menuItems.get(id);
+    public Optional<MenuItem> getMenuItem(int id){
+        return Optional.of(menuItems.get(id));
     }
 
     @Override
-    public List<String> getMenuItemLabels() {
-        return menuItems.values().stream().map(MenuItem::getLabel).collect(Collectors.toList());
+    public List<MenuItem> getMenuItemList() {
+        return menuItems.values().stream().toList();
     }
 
 
