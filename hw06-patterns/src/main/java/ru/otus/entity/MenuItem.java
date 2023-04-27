@@ -1,8 +1,10 @@
 package ru.otus.entity;
 
+import ru.otus.processor.MenuProcessor;
+
 import java.util.Objects;
 
-public record MenuItem(Integer id, String label) {
+public record MenuItem(Integer id, String label) implements Comparable<MenuItem>{
 
     @Override
     public boolean equals(Object o) {
@@ -14,5 +16,15 @@ public record MenuItem(Integer id, String label) {
     @Override
     public int hashCode() {
         return Objects.hash(id());
+    }
+
+    @Override
+    public int compareTo(MenuItem o) {
+        if (this.id < o.id) {
+            return -1;
+        } else if (this.id > o.id){
+            return 1;
+        }
+        return 0;
     }
 }

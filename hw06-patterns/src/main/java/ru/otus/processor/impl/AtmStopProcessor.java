@@ -1,10 +1,10 @@
 package ru.otus.processor.impl;
 
-import ru.otus.processor.ATMProcessor;
+import ru.otus.processor.MenuProcessor;
 import ru.otus.service.ApplicationStatusService;
 import ru.otus.service.OutputService;
 
-public class AtmStopProcessor implements ATMProcessor {
+public class AtmStopProcessor implements MenuProcessor {
 
     private final ApplicationStatusService applicationStatusService;
 

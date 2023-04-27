@@ -6,8 +6,7 @@ import ru.otus.exception.IncorrectMenuItemException;
 import ru.otus.exception.IncorrectRequestedAmount;
 import ru.otus.exception.NotEnoughCashException;
 import ru.otus.formatter.CashWithdrawMessageFormatter;
-import ru.otus.processor.ATMProcessor;
-import ru.otus.repository.PermissionMenuItemRepository;
+import ru.otus.processor.MenuProcessor;
 import ru.otus.service.CashService;
 import ru.otus.service.InputService;
 import ru.otus.service.OutputService;
@@ -15,7 +14,7 @@ import ru.otus.service.PermissionService;
 
 import java.util.Optional;
 
-public class CashWithdrawProcessor implements ATMProcessor {
+public class CashWithdrawProcessor implements MenuProcessor {
 
     private static final String REQUEST_CASH_AMOUNT = "Please, enter the amount of cash to withdraw";
 

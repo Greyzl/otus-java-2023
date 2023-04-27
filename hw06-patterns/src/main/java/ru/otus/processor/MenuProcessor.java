@@ -1,5 +1,5 @@
 package ru.otus.processor;
 
-public interface ATMProcessor {
+public interface MenuProcessor {
     void process();
 }
