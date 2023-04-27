@@ -4,13 +4,13 @@ import ru.otus.entity.BanknotePack;
 import ru.otus.entity.enums.BanknoteType;
 import ru.otus.entity.Cash;
 import ru.otus.service.BanknoteCellService;
-import ru.otus.service.CashService;
+import ru.otus.service.DispenserService;
 
-public class CashServiceImpl implements CashService {
+public class DispenserServiceImpl implements DispenserService {
 
     private final BanknoteCellService banknoteCellService;
 
-    public CashServiceImpl(BanknoteCellService banknoteCellService){
+    public DispenserServiceImpl(BanknoteCellService banknoteCellService){
         this.banknoteCellService = banknoteCellService;
     }
 
@@ -48,8 +48,4 @@ public class CashServiceImpl implements CashService {
         );
     }
 
-    @Override
-    public int getAvailableCashAmount() {
-        return banknoteCellService.getAvailableCashAmount();
-    }
 }

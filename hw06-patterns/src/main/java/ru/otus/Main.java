@@ -8,6 +8,7 @@ import ru.otus.processor.MenuProcessor;
 import ru.otus.processor.impl.AtmStopProcessor;
 import ru.otus.processor.impl.BalanceStatusProcessor;
 import ru.otus.processor.impl.CashWithdrawProcessor;
+import ru.otus.processor.impl.PopupProcessor;
 import ru.otus.repository.MenuItemRepository;
 import ru.otus.repository.BanknoteCellRepository;
 import ru.otus.repository.MenuProcessorRepository;
@@ -44,7 +45,7 @@ public class Main {
 
         BanknoteCellService banknoteCellService = new BanknoteCellServiceImpl(banknoteCellRepository);
         MenuProcessor balanceStatusProcessor = new BalanceStatusProcessor(banknoteCellService, outputService);
-        CashService cashService = new CashServiceImpl(banknoteCellService);
+        DispenserService dispenserService = new DispenserServiceImpl(banknoteCellService);
 
 
         MenuItemRepository permissionMenuItemRepository = new MenuItemRepositoryImpl();
@@ -59,26 +60,30 @@ public class Main {
 
         PermissionService permissionService = new PermissionServiceImpl(permissionMenuItemRepository,
                 menuPermissionRepository, outputService,inputService);
-        MenuProcessor cashWithdrawProcessor = new CashWithdrawProcessor(outputService, inputService, cashService, permissionService);
+        MenuProcessor cashWithdrawProcessor = new CashWithdrawProcessor(outputService, inputService,
+                banknoteCellService ,dispenserService, permissionService);
 
-        MenuPermissionRepository menuItemRepository = new MenuPermissionRepositoryImpl();
+        MenuProcessor popupMenuProcessor = new PopupProcessor(inputService, outputService, banknoteCellService);
+
 
         MenuItem balanceStatusMenuItem = new MenuItem(1, "Balance");
         MenuItem cashWithdrawMenuItem = new MenuItem(2, "Withdraw");
-        MenuItem atmStopMenuItem = new MenuItem(3, "Exit");
+        MenuItem popupMenuItem = new MenuItem(3, "Popup");
+        MenuItem atmStopMenuItem = new MenuItem(4, "Exit");
 
         MenuItemRepository mainMenuItemsRepository = new MenuItemRepositoryImpl();
         mainMenuItemsRepository.add(balanceStatusMenuItem);
         mainMenuItemsRepository.add(cashWithdrawMenuItem);
+        mainMenuItemsRepository.add(popupMenuItem);
         mainMenuItemsRepository.add(atmStopMenuItem);
 
         MenuService mainMenuService = new MenuServiceImpl(
                 outputService, inputService, mainMenuItemsRepository);
 
-
         MenuProcessorRepository mainMenuProcessorRepository = new MenuProcessorRepositoryImpl();
         mainMenuProcessorRepository.add(balanceStatusMenuItem, balanceStatusProcessor);
         mainMenuProcessorRepository.add(cashWithdrawMenuItem, cashWithdrawProcessor);
+        mainMenuProcessorRepository.add(popupMenuItem, popupMenuProcessor);
         mainMenuProcessorRepository.add(atmStopMenuItem, atmStopProcessor);
 
 

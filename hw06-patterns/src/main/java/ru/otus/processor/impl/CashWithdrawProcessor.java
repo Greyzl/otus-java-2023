@@ -7,10 +7,7 @@ import ru.otus.exception.IncorrectRequestedAmount;
 import ru.otus.exception.NotEnoughCashException;
 import ru.otus.formatter.CashWithdrawMessageFormatter;
 import ru.otus.processor.MenuProcessor;
-import ru.otus.service.CashService;
-import ru.otus.service.InputService;
-import ru.otus.service.OutputService;
-import ru.otus.service.PermissionService;
+import ru.otus.service.*;
 
 import java.util.Optional;
 
@@ -22,7 +19,9 @@ public class CashWithdrawProcessor implements MenuProcessor {
 
     private final InputService inputService;
 
-    private final CashService cashService;
+    private final BanknoteCellService banknoteCellService;
+
+    private final DispenserService dispenserService;
 
     private final CashWithdrawMessageFormatter cashWithdrawMessageFormatter = new CashWithdrawMessageFormatter();
 
@@ -30,11 +29,13 @@ public class CashWithdrawProcessor implements MenuProcessor {
 
     public CashWithdrawProcessor(OutputService outputService,
                                  InputService inputService,
-                                 CashService cashService,
+                                 BanknoteCellService banknoteCellService,
+                                 DispenserService dispenserService,
                                  PermissionService permissionService){
         this.outputService = outputService;
         this.inputService = inputService;
-        this.cashService = cashService;
+        this.banknoteCellService = banknoteCellService;
+        this.dispenserService = dispenserService;
         this.permissionService = permissionService;
     }
 
@@ -42,13 +43,13 @@ public class CashWithdrawProcessor implements MenuProcessor {
     public void process() {
         try {
             int requestedCashAmount = getRequestedCashAmount();
-            int availableCashAmount = cashService.getAvailableCashAmount();
+            int availableCashAmount = banknoteCellService.getAvailableCashAmount();
             if (availableCashAmount < requestedCashAmount){
                 throw new NotEnoughCashException();
             }
             Optional<Cash> mayByCash = tryToWithdrawCash(requestedCashAmount);
             if (mayByCash.isPresent()){
-                cashService.withdraw(mayByCash.get());
+                dispenserService.withdraw(mayByCash.get());
                 String formattedCashReport = cashWithdrawMessageFormatter.format(mayByCash.get());
                 outputService.print("Success! \n" + formattedCashReport);
             } else {
@@ -59,7 +60,7 @@ public class CashWithdrawProcessor implements MenuProcessor {
         } catch (NotEnoughCashException e){
             outputService.print("Not enough cash, operation finished");
         } catch (IncorrectMenuItemException e){
-
+            outputService.print("Such option doesn't exist");
         }
     }
 
@@ -79,7 +80,7 @@ public class CashWithdrawProcessor implements MenuProcessor {
     }
 
     private Optional<Cash> tryToWithdrawCash(int requestedCashAmount){
-        Cash possibleCashWithdrawal = cashService.getPossibleCashWithdrawal(requestedCashAmount);
+        Cash possibleCashWithdrawal = dispenserService.getPossibleCashWithdrawal(requestedCashAmount);
         var possibleCashWithdrawalAmount = possibleCashWithdrawal.getTotal();
         if (possibleCashWithdrawalAmount < requestedCashAmount ){
             String question = String.format("Not enough banknotes for hole requested cash. " +
