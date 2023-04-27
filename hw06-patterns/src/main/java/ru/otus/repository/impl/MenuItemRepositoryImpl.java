@@ -1,7 +1,6 @@
 package ru.otus.repository.impl;
 
 import ru.otus.entity.MenuItem;
-import ru.otus.processor.MenuProcessor;
 import ru.otus.repository.MenuItemRepository;
 
 import java.util.*;
@@ -17,11 +16,6 @@ public class MenuItemRepositoryImpl implements MenuItemRepository {
     @Override
     public Optional<MenuItem> getById(int id) {
         return menuItems.stream().filter(menuItem -> menuItem.id() == id).findFirst();
-    }
-
-    @Override
-    public List<MenuItem> getAll() {
-        return menuItems;
     }
 
     @Override

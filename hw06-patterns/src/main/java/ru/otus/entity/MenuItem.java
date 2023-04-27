@@ -1,7 +1,5 @@
 package ru.otus.entity;
 
-import ru.otus.processor.MenuProcessor;
-
 import java.util.Objects;
 
 public record MenuItem(Integer id, String label) implements Comparable<MenuItem>{

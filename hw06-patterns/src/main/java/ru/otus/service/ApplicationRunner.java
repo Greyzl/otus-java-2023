@@ -3,7 +3,6 @@ package ru.otus.service;
 import ru.otus.entity.MenuItem;
 import ru.otus.exception.UnexpectedException;
 import ru.otus.processor.MenuProcessor;
-import ru.otus.repository.MenuItemRepository;
 import ru.otus.repository.MenuProcessorRepository;
 
 public class ApplicationRunner {

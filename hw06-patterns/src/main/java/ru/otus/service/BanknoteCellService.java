@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface BanknoteCellService {
 
-    int getBanknoteCount(BanknoteType banknoteType);
-
     void addBanknoteCount(BanknoteType banknoteType, int banknoteCount);
 
     void withdrawBanknoteCount(BanknoteType banknoteType, int banknoteCount);
