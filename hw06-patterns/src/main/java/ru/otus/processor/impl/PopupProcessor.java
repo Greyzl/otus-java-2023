@@ -4,14 +4,14 @@ import ru.otus.entity.BanknotePack;
 import ru.otus.entity.Cash;
 import ru.otus.entity.enums.BanknoteType;
 import ru.otus.exception.IncorrectBanknoteCountException;
-import ru.otus.processor.MenuProcessor;
+import ru.otus.processor.AtmProcessor;
 import ru.otus.service.BanknoteCellService;
 import ru.otus.service.InputService;
 import ru.otus.service.OutputService;
 
 import java.util.List;
 
-public class PopupProcessor implements MenuProcessor {
+public class PopupProcessor implements AtmProcessor {
 
     private final InputService inputService;
 

@@ -1,11 +1,11 @@
 package ru.otus.processor.impl;
 
 import ru.otus.formatter.AtmBalanceMessageFormatter;
-import ru.otus.processor.MenuProcessor;
+import ru.otus.processor.AtmProcessor;
 import ru.otus.service.BanknoteCellService;
 import ru.otus.service.OutputService;
 
-public class BalanceStatusProcessor implements MenuProcessor {
+public class BalanceStatusProcessor implements AtmProcessor {
 
     private final BanknoteCellService banknoteCellService;
 

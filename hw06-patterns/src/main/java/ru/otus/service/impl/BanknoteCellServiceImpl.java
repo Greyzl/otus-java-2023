@@ -20,12 +20,6 @@ public class BanknoteCellServiceImpl implements BanknoteCellService {
     }
 
     @Override
-    public int getBanknoteCount(BanknoteType banknoteType) {
-        BanknoteCell banknoteCell = banknoteCellRepository.get(banknoteType);
-        return banknoteCell.getBanknoteCount();
-    }
-
-    @Override
     public void addBanknoteCount(BanknoteType banknoteType, int banknoteCount) {
         var banknoteCell =  banknoteCellRepository.get(banknoteType);
         banknoteCell.addBanknoteCount(banknoteCount);

@@ -1,41 +1,26 @@
 package ru.otus.service;
 
-import ru.otus.entity.MenuItem;
-import ru.otus.exception.UnexpectedException;
-import ru.otus.processor.MenuProcessor;
-import ru.otus.repository.MenuProcessorRepository;
+import ru.otus.processor.AtmProcessor;
+
+import java.util.List;
 
 public class ApplicationRunner {
 
-    private final MenuService menuService;
-
-    private final MenuProcessorRepository menuProcessorRepository;
-
-    private final ApplicationStatusService applicationStatusService;
-
     private final OutputService outputService;
 
+    private final List<AtmProcessor> processors;
 
-    public ApplicationRunner(MenuService menuService,
-                             MenuProcessorRepository menuProcessorRepository,
-                             ApplicationStatusService applicationStatusService,
-                             OutputService outputService){
-        this.menuService = menuService;
-        this.menuProcessorRepository = menuProcessorRepository;
-        this.applicationStatusService = applicationStatusService;
+
+    public ApplicationRunner(OutputService outputService,
+                             List<AtmProcessor> processors){
         this.outputService = outputService;
+        this.processors = processors;
     }
 
     public void run(){
         outputService.print("Welcome!");
-        while (applicationStatusService.isRunning()){
-            try {
-                MenuItem selectedMenuItem = menuService.getSelectedMenuItem();
-                MenuProcessor selectedProcessor = menuProcessorRepository.getByMenuItem(selectedMenuItem);
-                selectedProcessor.process();
-            } catch (Exception e){
-                throw new UnexpectedException("Something bad happened");
-            }
+        for (AtmProcessor atmProcessor: processors){
+            atmProcessor.process();
         }
     }
 
