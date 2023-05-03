@@ -1,4 +1,3 @@
-import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
 import org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
 import org.gradle.plugins.ide.idea.model.IdeaLanguageLevel
 import org.gradle.api.plugins.JavaPluginExtension
@@ -33,8 +32,8 @@ allprojects {
 
     val testcontainersBom: String by project
     val protobufBom: String by project
-
-    val guava: String by project;
+    val glassfishJson: String by project
+    val guava: String by project
 
 
     apply(plugin = "io.spring.dependency-management")
@@ -46,13 +45,13 @@ allprojects {
                 mavenBom("com.google.protobuf:protobuf-bom:$protobufBom")
             }
             dependency("com.google.guava:guava:$guava")
+            dependency("org.glassfish:jakarta.json:$glassfishJson")
         }
     }
 
     configurations.all {
         resolutionStrategy {
             failOnVersionConflict()
-
             force("javax.servlet:servlet-api:2.4")
             force("commons-logging:commons-logging:1.1.1")
             force("commons-lang:commons-lang:2.5")
@@ -96,20 +95,3 @@ allprojects {
     }
 }
 
-tasks {
-    val hello by registering {
-        doLast {
-            println("hello task")
-        }
-    }
-
-    val managedVersions by registering {
-        doLast {
-            project.extensions.getByType<DependencyManagementExtension>()
-                .managedVersions
-                .toSortedMap()
-                .map { "${it.key}:${it.value}" }
-                .forEach(::println)
-        }
-    }
-}
