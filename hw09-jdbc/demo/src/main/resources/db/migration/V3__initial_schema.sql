@@ -1,0 +1,1 @@
+alter table manager rename column id to no;
